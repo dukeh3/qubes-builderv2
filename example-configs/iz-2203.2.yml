@@ -20,8 +20,8 @@ distributions:
 templates:
   - fedora-37:
       dist: fc37
-      options:
-        - selinux
+#      options:
+#        - selinux
   - debian-11:
       dist: bullseye
       options:
@@ -29,16 +29,17 @@ templates:
         - firmware
 # This will build the .rpm package containing jammy (ubuntu 22.4) template
   # Using packages_jammy.list + gnome directory
-  - ubuntu-22.4:
+  - ubuntu-2204:
       dist: jammy
       flavor: gnome
   # Using packages_jammy.list only (no gnome apps)
-  - ubuntu-22.4-standard:
+  - ubuntu-2204-standard:
       dist: jammy
   # Using packages_jammy_minimal.list
-  - ubuntu-22.4-minimal:
+  - ubuntu-2204-minimal:
       dist: jammy
       flavor: minimal
+
 #  - whonix-gateway-16:
 #      dist: bullseye
 #      flavor: whonix-gateway
@@ -56,7 +57,6 @@ templates:
 
 iso:
   kickstart: conf/iz.cfg
-
 
 components:
   - builder-rpm:
@@ -128,7 +128,11 @@ components:
   - mgmt-salt-base-topd
   - mgmt-salt-base-config
   - mgmt-salt-dom0-qvm
-  - mgmt-salt-dom0-virtual-machines
+  - mgmt-salt-dom0-virtual-machines:
+      url: https://github.com/dukeh3/qubes-mgmt-salt-dom0-virtual-machines
+      branch: iz-2023.2
+      maintainers:
+        - 'A192A181185C4775C935A5B5E12B2F03D621C86E'
   - mgmt-salt-dom0-update
   - infrastructure
   - repo-templates
@@ -159,7 +163,11 @@ components:
   - lorax
   - lorax-templates
   - anaconda
-  - anaconda-addon
+  - anaconda-addon:
+      url: https://github.com/dukeh3/qubes-anaconda-addon
+      branch: iz-2023.2
+      maintainers:
+        - 'A192A181185C4775C935A5B5E12B2F03D621C86E'
   - initial-setup
   - sbsigntools
   - tpm-extra
@@ -170,6 +178,9 @@ components:
 #  - windows-tools-cross
   - video-companion
 
+less-secure-signed-commits-sufficient:
+  - anaconda-addon
+  - mgmt-salt-dom0-virtual-machines
 
 executor:
   type: docker
